@@ -42,14 +42,19 @@
     - Pada berkas `main.dart` ubah `MyHomePage(title: 'Flutter Demo Home Page')` menjadi `MyHomePage()`.
     - Ubah sifat widget halaman dari stateful menjadi stateless. Lakukan perubahan pada bagian `({super.key, required this.title})` menjadi `({Key? key}) : super(key: key);`. Hapus `final Srting title;` sampai bawah dan tambahkan Widget build.
     - Tambahkan teks dan card untuk tombol, dimulai dengan define tipe pada list kita.
-    ```class ShopItem { ```
-        ```final String name;```
-        ```final IconData icon;```
-        ```ShopItem(this.name, this.icon);```
-    ```}```
+
+        ```Dart 
+        class ShopItem {
+            final String name;
+            final IconData icon;
+        ShopItem(this.name, this.icon);
+        }
+        ```
+
     - Dibawah kode `MyHomePage({Key? key}) : super(key: key);`, tambahkan barang-barang yang dijual.
     - Selanjutnya tambahkan isi dari Scaffold dengan kode yang ada di tutorial.
     - Buat widget stateless baru untuk menampilkan card.
+
 
 
 ## Getting Started

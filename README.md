@@ -1,3 +1,85 @@
+# Tugas 8 
+
+1. **Jelaskan perbedaan antara Navigator.push() dan Navigator.pushReplacement(), disertai dengan contoh mengenai penggunaan kedua metode tersebut yang tepat!**
+
+    Keduanya digunakan untuk menavigasi antara berbagai halaman (routes) di aplikasi Flutter. Namun, perbedaan dari keduanya adalah:
+    - Navigator.push() 
+        Digunakan untuk menambahkan halaman baru ke tumpukan navigasi. Pengguna masih dapat kembali ke halaman sebelumnya. Contoh:
+        ```Dart 
+        Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => NewPage()),
+        );
+        ```
+
+    - Navigator.pushReplacement()
+        Digunakan untuk menggantikan halaman saat ini dengan halaman baru. Hal ini menghapus halaman saat ini dari tumpukan navigasi dan menambahkan halaman baru ke posisi tersebut. Contoh:
+        ```Dart
+        Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => NewPage()),
+        );
+        ```
+
+2.  **Jelaskan masing-masing layout widget pada Flutter dan konteks penggunaannya masing-masing!**
+
+    - **Column & Row** = Digunakan untuk mengatur posisi children widget secara vertikal maupun horizontal. Pada tugas ini, digunakan Column dalam mengatur tampilan Form, Snackbar, Menu, dan Drawer.
+    - **Container** = Digunakan untuk mengelompokkan berbagai widget dalam satu tempat. Widget-widget yang dikelompokkan tersebut juga dapat diberikan dekorasi sesuai yang kita inginkan. 
+    - **GridView** = Digunakan untuk menyusun berbagai child dalam bentuk grid atau table. GridView ini cocok untuk menampilkan koleksi item dalam grid, seperti galeri foto dan tampilan untuk ShopCard pada menu.
+    - **Card** = Merupakan widget yang menampilkan konten dalam bentuk kartu dengan sudut yang dibulatkan. Digunakan untuk menampilkan berbagai informasi dalam format yang konsisten, seperti kartu menu dan kartu kontak.
+    - **Wrap** = Merupakan widget yang mengatur child-nya ke dalam baris atau kolom, dan akan beralih ke baris atau kolom berikutnya jika tidak cukup ruang. Digunakan untuk menampilkan sejumlah widget dalam ruang yang terbatas.
+
+3. **Sebutkan apa saja elemen input pada form yang kamu pakai pada tugas kali ini dan jelaskan mengapa kamu menggunakan elemen input tersebut!**
+
+    Dalam tugas 8 ini, saya menggunakan elemen input berupa `TextFormField`. Dimana saya gunakan untuk memasukkan *name, price, amount, dan description*. Elemen input ini digunakan karena memiliki sifat yang interaktif dalam mengumpulkan input data. Selain itu, `TextFormField` juga dapat melakukan validasi terhadap input yang dimasukkan.
+
+4. **Bagaimana penerapan clean architecture pada aplikasi Flutter?**
+
+    Clean Architecture adalah pendekatan pengembangan perangkat lunak yang dirancang untuk meningkatkan pemeliharaan, skaalabilitas, dan uji pada proyek perangkat lunak. Penerapan Clean Architecture di Flutter melibatkan pemisahan kode ke dalam beberapa lapisan terisolasi. Berikut adalah contoh implementasinya dalam flutter:
+
+    **a. Lapisan Presentasi** = Bertanggung jawab untuk menangani tampilan dan presentasi. Untuk implementasi, masukkan widget Flutter pada direktori `screens/` dan `widgets/`.
+
+    **b. Lapisan Domain** = Merupakan inti dari aplikasi yang mengandung logika, aturan, dan entitas domain. Lapisan ini tidak boleh bergantung pada detail implementasi atau infrastruktur. Untuk implementasinya, buat direktori seperti `domain/` dan teruh berbagai logika pada direktori tersebut.
+
+    **c. Lapisan Infrastruktur** = Lapisan ini berisi implementasi dari detail teknis seperti penyimpanan data, API, database, dan lainnya. Untuk implementasi, tempatkan kode infrastruktur seperti penyimpanan lokal, pengambilan data dari API, atau pengaturan database di dalam direktori seperti `data/`. 
+    
+    **d. Lapisan Aplikasi** = Lapisan ini bertanggung jawab untuk mengkoordinasikan aliran data antara lapisan Presentasi, Domain, dan Infrastruktur. Untuk implementasi, tempatkan logika koordinasi, kasus penggunaan, dan objek yang memediasi antara presentasi dan domain pada direktori seperti `usecases/` atau `blocs/`.
+
+5. **Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step! (bukan hanya sekadar mengikuti tutorial)**
+
+    Checklist pembuatan drawer:
+
+    - Buat direktori baru bernama `widgets`, lalu buat berkas `left_drawer.dart` dalam direktori `widgets`.
+    - Impor halaman-halaman yang ingin kita masukkan navigasinya, lalu masukkan kode yang tersedia ke dalam berkas tersebut.
+    - Masukkan routing untuk halaman-halaman yang kita impor.
+    - Hias drawer dengan memasukkan drawer header.
+    - Masukkan drawer tersebut ke dalam halaman `menu.dart`.
+
+    Checklist pembuatan halaman baru untuk formulir:
+
+    - Buat berkas baru pada direktori `lib` dengan nama `shoplist_form.dart`.
+    - Tambahkan kode yang tersedia ke dalam berkas tersebut dan ubah widget Placeholder yang ada.
+    - Buat variabel baru bernama `_formKey`, lalu tambahkan ke dalam atribut `key` milik widget `Form`.
+    - Isi widget `Form` dengan `_name`, `_price`, `_amount`, dan `_description`.
+    - Buat widget `Column` sebagai child dari `SingleChildScrollView`.
+    - Buat empat widget `TextFormField` untuk field `name`, `price`, `amount`, dan `description`, yang dibungkus oleh `Padding` sebagai  children dari `Column`.
+    - Buat tombol sebagai child selanjutnya dari `Column`. Tombol ini digunakan untuk memunculkan pop-up.
+
+    Checklist pemunculan data sesuai isi dari formulir setelah menekan tombol Save:
+
+    - Tambahkan fungsi `showDialog()` pada bagian `onPressed()` dan munculkan widget `AlertDialog` pada fungsi tersebut.
+    - Tambahkan juga fungsi untuk mereset form.
+
+    Checklist pengarahan pengguna ke halaman formulir ketika menekan tombol Tambah Item pada halaman utama:
+
+    - Pada widget `ShopItem` pada berkas `menu.dart`, tambahkan kode pengimplementasian `Navigator.push()` dalam atribut `onTap`. Contoh kode:
+        ```Dart
+        if (item.name == "Tambah Item") {
+            Navigator.push(context, MaterialPageRoute(builder: (context) => const ShopFormPage()));
+        }
+        ``` 
+
+
 # Tugas 7
 
 1. **Apa perbedaan utama antara stateless dan stateful widget dalam konteks pengembangan aplikasi Flutter?**
@@ -22,7 +104,7 @@
     - SingleChildScrollView = Membuat supaya konten dapat melakukan scrolling.
     - Text = Menampilkan teks dengan gaya tertentu.
 
-3. Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial)
+3. **Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial)**
 
     Checklist Pertama:
 
@@ -56,8 +138,7 @@
     - Buat widget stateless baru untuk menampilkan card.
 
 
-
-## Getting Started
+<!-- ## Getting Started
 
 This project is a starting point for a Flutter application.
 
@@ -68,4 +149,4 @@ A few resources to get you started if this is your first Flutter project:
 
 For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+samples, guidance on mobile development, and a full API reference. -->

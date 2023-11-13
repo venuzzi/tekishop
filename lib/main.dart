@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tekishop/menu.dart';
+import 'package:tekishop/screens/menu.dart';
 
 void main() {
   runApp(const MyApp());

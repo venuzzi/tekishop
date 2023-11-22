@@ -2,17 +2,82 @@
 
 1. **Apakah bisa kita melakukan pengambilan data JSON tanpa membuat model terlebih dahulu? Jika iya, apakah hal tersebut lebih baik daripada membuat model sebelum melakukan pengambilan data JSON?**
 
-    
+    Pengambilan data JSON tanpa membuat model terlebih dahulu bisa dilakukan, bahkan akan lebih mudah dan tidak kompleks. Meskipun adanya kemudahan tersebut, terdapat beberapa resiko terkait validasi data dan konsistensi, terutama jika projek yang dikerjakan termasuk ke skala besar. Pembuatan model sebelum melakukan pemgambilan data JSON akan memberikan manfaat berupa validasi data yang signifikan. Pendekatan yang kedua tersebut akan lebih baik dilakukan dalam proyek skala besar sehingga akan membuat kode lebih mudah dibaca, dipelihara, dan memberikan struktur yang memudahkan pengelolaan dan ekspansi data.
+
+
 2. **Jelaskan fungsi dari CookieRequest dan jelaskan mengapa instance CookieRequest perlu untuk dibagikan ke semua komponen di aplikasi Flutter.**
+
+    CookieRequest ini berfungsi untuk mengelola berbagai operasi yang terkait dengan cookie dalam HTTP request di aplikasi flutter. Berbagai operasinya di antara lain yaitu manajemen cookie, autentikasi keamanan, pemeliharaan session, dan penyesuaian preferensi user. Instance CookieRequest ini perlu dibagikan ke semua komponen di app flutter agar dapat memastikan konsistensi data, efisiensi dalam kode, keamanan kode, dan memudahkan debugging.
 
 3. **Jelaskan mekanisme pengambilan data dari JSON hingga dapat ditampilkan pada Flutter.**
 
-4. **Jelaskan mekanisme autentikasi dari input data akun pada Flutter ke Django hingga selesainya proses autentikasi oleh Django dan tampilnya menu pada Flutter.**
+    Mekanisme pengambilan data:
+    1. Tambah dependensi http ke proyek, ini akan menambahkan dependensi agar bisa menggunakan fungsi HTTP untuk melakukan request ke web service.
+    2. Buat model yang sesuai dengan respons data dari web service, hal ini akan menentukan format data dan menentukan struktur data yang akan digunakan untuk menyimpan data.
+    3. Buat http request ke web service menggunakan dependensi http, ini untuk menentukan URL web service yang akan diaksess, menentukan metode HTTP yang digunakan, dan menentukan parameter yang dikirim ke web service.
+    4. Konversi objek yang didapat dari web service ke model yang telah dibuat, ini dilakukan dengan membaca data dari objek yang diterima dari web service, kemudiannya menyimpannya ke model yang telah dibuat.
+    5. Menampilkan data yang telah dikonversi ke aplikasi dengan `FutureBuilder`, data akan ditampilkan secara bertahap.
+    6. Fetch JSON ke url yang sama dengan header json, ini untuk menambahka header untuk menentukan format JSON yang akan diterima.
+    7. Sesuaikan body JSON yang telah difetch ke model item sesuai dengan properti yang ada.
 
+4. **Jelaskan mekanisme autentikasi dari input data akun pada Flutter ke Django hingga selesainya proses autentikasi oleh Django dan tampilnya menu pada Flutter.**
+    Mekanisme autentikasi dan menampilkan menu pada flutter:
+    1. User memasukkan username dan password pada TextField.
+    2. Buat permintaaan POST HTTP ke fungsi login Django, dengan membuat `CookieRequest` baru yang akan digunakan untuk mengirim data ke web server dan menyimpan session user yang telah terautentikasi.
+    3. Django kemudian mengelola permintaan login dengan memvalidasi username dan password. Jika berhasil, akan dikirimkan respons yang diakses dan diperiksa oleh app flutter.
+    4. Jika login sukses akan melakukan navigasi ke halaman `MyHomePage`.
 
 5. **Sebutkan seluruh widget yang kamu pakai pada tugas ini dan jelaskan fungsinya masing-masing.**
 
+    Berikut widget-widget yang saya gunakan pada tugas ini:
+    - **Drawer**, untuk membuat sebuah drawer yang berisikan menu-menu seperti buat item dan lihat item.
+    - **TextFormField**, untuk membuat input field pada halaman `shoplist_form.dart` dan `login.dart`.
+    - **FutureBuilder**, untuk membuat widget yang akan dibangun di masa yang akan datang.
+    - **AlertDialog**, untuk membuat popup pesan peringatan kepada user.
+    - **ElevatedButton**, untuk membuat dan menampilkan tombol.
+    - **ListTile**, untuk membuat menu-menu yang ada pada drawer serta membuat list dari item.
+    - **ScaffoldMessenger**, untuk menampilkan snackbar.
+    - **ListView.builder**, untuk membuat list item.
+    - **Navigator**, untuk mengelola dan menavigasi rute didalam aplikasi.
+    - **TextButton**, untuk membuat dan menampilkan tombol yang berisi teks.
+
 6. **Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step! (bukan hanya sekadar mengikuti tutorial).**
+
+    Checklist pembuatan halaman login: 
+
+    - Install package `Provider` dan `pbp_django_auth`.
+    - Modifikasi root widget untuk menyediakan `CookieRequest` library ke semua child widgets dengan menggunakan `Provider`.
+    - Buat file baru pada folder `screens` dengan nama `login.dart`.
+    - Isi file `login.dart` dengan kode yang telah disediakan.
+    - Ubah `home: MyHomePage()` menjadi `home: LoginPage()` widget `MaterialApp(...)` pada file `main.dart`.
+
+    Checklist integrasi sistem autentikasi Django:
+
+    - Buat app Django baru bernama `authentication` pada proyek Django sebelumnya.
+    - Install library `django-cors-headers`. 
+    - Tambahkan `corsheaders` ke `INSTALLED_APPS` pada main project `settings.py`.
+    - Tambahkan middleware corsheaders nya dan beberapa variabel cookie ke `settings.py`.
+    - Buat method view untuk login pada `authentication/views.py`.
+    - Atur pathnya pada `urls.py`.
+
+    Checklist pembuatan model kustom:
+
+    - Salin endpoint JSON yang ada pada proyek Django.
+    - Buka situs Quicktype lalu ubah setup name menjadi `Product`, source type menjadi `JSON`, dan language menjadi `Dart`.
+    - Tempelkan data JSON yang telah disalin sebelumnya kedalam textbox yang tersedia.
+    - Tekan pilihan `Copy Code` pada Quicktype
+    - Buat file baru bernama `product.dart` pada folder `lib/models`, lalu tempel kode yang telah disalin ke dalamnya.
+
+    Checklist pembuatan halaman yang berisi daftar item:
+    
+    - Buat file baru pada folder `lib/screens` dengan nama `list_product.dart`.
+    - Lalu impor library yang dibutuhkan ke dalam file baru tersebut.
+    - Salin potongan kode yang tersedia ke `pages/list_product.dart`, setelah itu imporlah file-file yang diperlukan.
+    - Tambahkan halaman `list_product.dart` ke `left_drawer.dart` dengan menambahkan kode yang tersedia.
+    - Ubah fungsi tombol `Lihat Produck` pada halaman utama agar mengarahkan ke halaman `ProductPage`.
+    - Impor file yang dibutuhkan saat menambahkan `ProductPage` ke `left_drawer.dart` dan `shop_card.dart`.
+
+
 
 
 
